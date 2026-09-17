@@ -10,12 +10,15 @@
 
     <title>@yield('title', 'EduCore - Admin')</title>
 
+    {{-- Font Awesome --}}
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+    {{-- Admin Dashboard CSS --}}
     <link rel="stylesheet"
           href="{{ asset('css/admin-dashboard.css') }}">
 
+    {{-- Page-specific CSS --}}
     @yield('styles')
 
 </head>
@@ -31,7 +34,6 @@
     <aside class="sidebar">
 
         {{-- Logo --}}
-
         <div class="sidebar-logo">
 
             <div class="logo-box">
@@ -44,235 +46,244 @@
 
 
         {{-- Administration --}}
-
         <div class="sidebar-section-title">
             ADMINISTRATION
         </div>
 
 
+        {{-- =====================================================
+             SIDEBAR MENU
+        ====================================================== --}}
+
         <nav class="sidebar-menu">
 
-    {{-- Dashboard --}}
-    <a href="{{ route('admin.dashboard') }}"
-       class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            {{-- Dashboard --}}
+            <a href="{{ route('admin.dashboard') }}"
+               class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-table-cells-large"></i>
+                <i class="fa-solid fa-table-cells-large"></i>
 
-        <span>Dashboard</span>
+                <span>Dashboard</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Students --}}
-    <a href="{{ route('admin.students') }}"
-       class="menu-item {{ request()->routeIs('admin.students*') ? 'active' : '' }}">
+            {{-- Students --}}
+            <a href="{{ route('admin.students') }}"
+               class="menu-item {{ request()->routeIs('admin.students*') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-users"></i>
+                <i class="fa-solid fa-users"></i>
 
-        <span>Students</span>
+                <span>Students</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Faculty --}}
-    <a href="{{ route('admin.faculty') }}"
-       class="menu-item {{ request()->routeIs('admin.faculty*') ? 'active' : '' }}">
+            {{-- Faculty --}}
+            <a href="{{ route('admin.faculty') }}"
+               class="menu-item {{ request()->routeIs('admin.faculty*') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-user-group"></i>
+                <i class="fa-solid fa-user-group"></i>
 
-        <span>Faculty</span>
+                <span>Faculty</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Departments --}}
-    <a href="{{ route('admin.departments') }}"
-       class="menu-item {{ request()->routeIs('admin.departments*') ? 'active' : '' }}">
+            {{-- Departments --}}
+            <a href="{{ route('admin.departments') }}"
+               class="menu-item {{ request()->routeIs('admin.departments*') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-building"></i>
+                <i class="fa-solid fa-building"></i>
 
-        <span>Departments</span>
+                <span>Departments</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Courses --}}
-    <a href="{{ route('admin.courses') }}"
-       class="menu-item {{ request()->routeIs('admin.courses*') ? 'active' : '' }}">
+            {{-- Courses --}}
+            <a href="{{ route('admin.courses') }}"
+               class="menu-item {{ request()->routeIs('admin.courses*') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-book-open"></i>
+                <i class="fa-solid fa-book-open"></i>
 
-        <span>Courses</span>
+                <span>Courses</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Subjects --}}
-    <a href="{{ route('admin.subjects') }}"
-       class="menu-item {{ request()->routeIs('admin.subjects*') ? 'active' : '' }}">
+            {{-- Subjects --}}
+            <a href="{{ route('admin.subjects') }}"
+               class="menu-item {{ request()->routeIs('admin.subjects*') ? 'active' : '' }}">
 
-        <i class="fa-regular fa-folder"></i>
+                <i class="fa-regular fa-folder"></i>
 
-        <span>Subjects</span>
+                <span>Subjects</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Attendance --}}
-    <a href="{{ route('admin.attendance') }}"
-       class="menu-item {{ request()->routeIs('admin.attendance*') ? 'active' : '' }}">
+            {{-- Attendance --}}
+            <a href="{{ route('admin.attendance') }}"
+               class="menu-item {{ request()->routeIs('admin.attendance*') ? 'active' : '' }}">
 
-        <i class="fa-regular fa-calendar-check"></i>
+                <i class="fa-regular fa-calendar-check"></i>
 
-        <span>Attendance</span>
+                <span>Attendance</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Assignments --}}
-    <a href="{{ route('admin.assignments') }}"
-       class="menu-item {{ request()->routeIs('admin.assignments*') ? 'active' : '' }}">
+            {{-- Assignments --}}
+            <a href="{{ route('admin.assignments') }}"
+               class="menu-item {{ request()->routeIs('admin.assignments*') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-clipboard-list"></i>
+                <i class="fa-solid fa-clipboard-list"></i>
 
-        <span>Assignments</span>
+                <span>Assignments</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Examinations --}}
-    <a href="{{ route('admin.examinations') }}"
-       class="menu-item {{ request()->routeIs('admin.examinations*') ? 'active' : '' }}">
+            {{-- Examinations --}}
+            <a href="{{ route('admin.examinations') }}"
+               class="menu-item {{ request()->routeIs('admin.examinations*') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-graduation-cap"></i>
+                <i class="fa-solid fa-graduation-cap"></i>
 
-        <span>Examinations</span>
+                <span>Examinations</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Results --}}
-    <a href="{{ route('admin.results') }}"
-       class="menu-item {{ request()->routeIs('admin.results*') ? 'active' : '' }}">
+            {{-- Results --}}
+            <a href="{{ route('admin.results') }}"
+               class="menu-item {{ request()->routeIs('admin.results*') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-chart-column"></i>
+                <i class="fa-solid fa-chart-column"></i>
 
-        <span>Results</span>
+                <span>Results</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Timetable --}}
-    <a href="{{ route('admin.timetable') }}"
-       class="menu-item {{ request()->routeIs('admin.timetable*') ? 'active' : '' }}">
+            {{-- Timetable --}}
+            <a href="{{ route('admin.timetable') }}"
+               class="menu-item {{ request()->routeIs('admin.timetable*') ? 'active' : '' }}">
 
-        <i class="fa-regular fa-clock"></i>
+                <i class="fa-regular fa-clock"></i>
 
-        <span>Timetable</span>
+                <span>Timetable</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Notices --}}
-    <a href="{{ route('admin.notices') }}"
-       class="menu-item {{ request()->routeIs('admin.notices*') ? 'active' : '' }}">
+            {{-- Notices --}}
+            <a href="{{ route('admin.notices') }}"
+               class="menu-item {{ request()->routeIs('admin.notices*') ? 'active' : '' }}">
 
-        <i class="fa-regular fa-bell"></i>
+                <i class="fa-regular fa-bell"></i>
 
-        <span>Notices</span>
+                <span>Notices</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Reports --}}
-    <a href="{{ route('admin.reports') }}"
-       class="menu-item {{ request()->routeIs('admin.reports*') ? 'active' : '' }}">
+            {{-- Reports --}}
+            <a href="{{ route('admin.reports') }}"
+               class="menu-item {{ request()->routeIs('admin.reports*') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-chart-pie"></i>
+                <i class="fa-solid fa-chart-pie"></i>
 
-        <span>Reports</span>
+                <span>Reports</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
 
-    {{-- Settings --}}
-    <a href="{{ route('admin.settings') }}"
-       class="menu-item {{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
+            {{-- Settings --}}
+            <a href="{{ route('admin.settings') }}"
+               class="menu-item {{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
 
-        <i class="fa-solid fa-gear"></i>
+                <i class="fa-solid fa-gear"></i>
 
-        <span>Settings</span>
+                <span>Settings</span>
 
-        <small></small>
+                <small></small>
 
-    </a>
+            </a>
 
-</nav>
+        </nav>
 
 
-        {{-- User --}}
+        {{-- =====================================================
+             SIDEBAR USER
+        ====================================================== --}}
 
         <div class="sidebar-user">
 
-    <div class="user-avatar">
+            <div class="user-avatar">
 
-        {{ strtoupper(substr(session('admin_name', 'Administrator'), 0, 2)) }}
+                {{ strtoupper(substr(session('admin_name', 'Administrator'), 0, 2)) }}
 
-    </div>
+            </div>
 
-    <div class="user-details">
 
-        <strong>
-            {{ session('admin_name', 'Administrator') }}
-        </strong>
+            <div class="user-details">
 
-        <span>
-            Super Admin
-        </span>
+                <strong>
+                    {{ session('admin_name', 'Administrator') }}
+                </strong>
 
-    </div>
+                <span>
+                    Super Admin
+                </span>
 
-    {{-- Logout Button --}}
-    <form method="POST" action="{{ route('admin.logout') }}">
-        @csrf
+            </div>
 
-        <button type="submit"
-                class="logout-button"
-                title="Logout">
 
-            <i class="fa-solid fa-right-from-bracket"></i>
+            {{-- Logout Button --}}
+            <form method="POST"
+                  action="{{ route('admin.logout') }}">
 
-        </button>
+                @csrf
 
-    </form>
+                <button type="submit"
+                        class="logout-button"
+                        title="Logout">
 
-</div>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                </button>
+
+            </form>
+
+        </div>
 
     </aside>
 
@@ -283,133 +294,171 @@
 
     <main class="main-content">
 
-        {{-- TOP BAR --}}
 
-       <header class="topbar">
+        {{-- =====================================================
+             TOP BAR
+        ====================================================== --}}
 
-    <div class="topbar-spacer"></div>
+        <header class="topbar">
 
-    <div class="topbar-right">
+            <div class="topbar-spacer"></div>
 
-        {{-- Notifications --}}
-        <button type="button" class="topbar-icon" title="Notifications">
-            <i class="fa-regular fa-bell"></i>
-        </button>
+            <div class="topbar-right">
 
-        <div class="divider"></div>
+                {{-- Notifications --}}
+                <button type="button"
+                        class="topbar-icon"
+                        title="Notifications">
 
-        {{-- Messages --}}
-        <button type="button" class="topbar-icon" title="Messages">
-            <i class="fa-regular fa-message"></i>
-        </button>
+                    <i class="fa-regular fa-bell"></i>
 
-        <div class="divider"></div>
-
-        {{-- Profile --}}
-        {{-- Profile Dropdown --}}
-<div class="profile-dropdown">
-
-    <button type="button"
-            class="profile"
-            id="profileButton">
-
-        <div class="profile-avatar">
-            {{ strtoupper(substr(session('admin_name', 'Administrator'), 0, 2)) }}
-        </div>
-
-        <div class="profile-info">
-
-            <strong>
-                {{ session('admin_name', 'Administrator') }}
-            </strong>
-
-            <span>
-                Super Admin
-            </span>
-
-        </div>
-
-        <i class="fa-solid fa-chevron-down profile-arrow"></i>
-
-    </button>
+                </button>
 
 
-    {{-- Dropdown Menu --}}
-    <div class="profile-menu" id="profileMenu">
-
-        {{-- Profile --}}
-        <a href="#"
-           class="profile-menu-item">
-
-            <i class="fa-regular fa-user"></i>
-
-            <span>Profile</span>
-
-        </a>
+                <div class="divider"></div>
 
 
-        {{-- Settings --}}
-        <a href="{{ route('admin.settings') }}"
-           class="profile-menu-item">
+                {{-- Messages --}}
+                <button type="button"
+                        class="topbar-icon"
+                        title="Messages">
 
-            <i class="fa-solid fa-gear"></i>
+                    <i class="fa-regular fa-message"></i>
 
-            <span>Settings</span>
-
-        </a>
-
-
-        <div class="profile-menu-divider"></div>
+                </button>
 
 
-        {{-- Logout --}}
-        <form method="POST"
-              action="{{ route('admin.logout') }}">
-
-            @csrf
-
-            <button type="submit"
-                    class="profile-menu-item logout-menu-item">
-
-                <i class="fa-solid fa-right-from-bracket"></i>
-
-                <span>Logout</span>
-
-            </button>
-
-        </form>
-
-    </div>
-
-</div>
-
-    </div>
-
-</header>
+                <div class="divider"></div>
 
 
-        {{-- PAGE CONTENT --}}
+                {{-- =================================================
+                     PROFILE DROPDOWN
+                ================================================== --}}
+
+                <div class="profile-dropdown">
+
+                    <button type="button"
+                            class="profile"
+                            id="profileButton">
+
+                        <div class="profile-avatar">
+
+                            {{ strtoupper(substr(session('admin_name', 'Administrator'), 0, 2)) }}
+
+                        </div>
+
+
+                        <div class="profile-info">
+
+                            <strong>
+                                {{ session('admin_name', 'Administrator') }}
+                            </strong>
+
+                            <span>
+                                Super Admin
+                            </span>
+
+                        </div>
+
+
+                        <i class="fa-solid fa-chevron-down profile-arrow"></i>
+
+                    </button>
+
+
+                    {{-- Profile Menu --}}
+                    <div class="profile-menu"
+                         id="profileMenu">
+
+
+                        {{-- Profile --}}
+                        <a href="#"
+                           class="profile-menu-item">
+
+                            <i class="fa-regular fa-user"></i>
+
+                            <span>Profile</span>
+
+                        </a>
+
+
+                        {{-- Settings --}}
+                        <a href="{{ route('admin.settings') }}"
+                           class="profile-menu-item">
+
+                            <i class="fa-solid fa-gear"></i>
+
+                            <span>Settings</span>
+
+                        </a>
+
+
+                        <div class="profile-menu-divider"></div>
+
+
+                        {{-- Logout --}}
+                        <form method="POST"
+                              action="{{ route('admin.logout') }}">
+
+                            @csrf
+
+                            <button type="submit"
+                                    class="profile-menu-item logout-menu-item">
+
+                                <i class="fa-solid fa-right-from-bracket"></i>
+
+                                <span>Logout</span>
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        {{-- =========================================================
+             PAGE CONTENT
+        ========================================================== --}}
 
         <section class="content">
 
+            {{-- =========================================================
+                SUCCESS MESSAGE
+            ========================================================== --}}
+
             @if(session('success'))
 
-                <div class="alert alert-success">
+                <div class="alert alert-success auto-dismiss-alert">
+
                     {{ session('success') }}
+
                 </div>
 
             @endif
 
+
+            {{-- =========================================================
+                ERROR MESSAGE
+            ========================================================== --}}
 
             @if(session('error'))
 
-                <div class="alert alert-error">
+                <div class="alert alert-error auto-dismiss-alert">
+
                     {{ session('error') }}
+
                 </div>
 
             @endif
 
 
+            {{-- PAGE CONTENT --}}
             @yield('content')
 
         </section>
@@ -417,21 +466,31 @@
     </main>
 
 </div>
+
+
+{{-- =============================================================
+     PROFILE DROPDOWN JAVASCRIPT
+============================================================= --}}
+
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
 
-        const profileButton = document.getElementById('profileButton');
-        const profileDropdown = document.querySelector('.profile-dropdown');
+        const profileButton =
+            document.getElementById('profileButton');
+
+        const profileDropdown =
+            document.querySelector('.profile-dropdown');
+
 
         if (!profileButton || !profileDropdown) {
             return;
         }
 
 
-        /* Open / Close dropdown */
-
         profileButton.addEventListener('click', function (event) {
+
+            event.preventDefault();
 
             event.stopPropagation();
 
@@ -439,8 +498,6 @@
 
         });
 
-
-        /* Close when clicking outside */
 
         document.addEventListener('click', function (event) {
 
@@ -452,8 +509,6 @@
 
         });
 
-
-        /* Close with Escape */
 
         document.addEventListener('keydown', function (event) {
 
@@ -468,6 +523,57 @@
     });
 
 </script>
+
+
+{{-- =============================================================
+     AUTO DISMISS ALERT MESSAGES
+     Success / Error messages disappear after 3 seconds
+============================================================= --}}
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const alerts = document.querySelectorAll(
+            '.auto-dismiss-alert'
+        );
+
+        alerts.forEach(function (alert) {
+
+            setTimeout(function () {
+
+                alert.style.opacity = '0';
+
+                alert.style.transform = 'translateY(-8px');
+
+                setTimeout(function () {
+
+                    alert.remove();
+
+                }, 300);
+
+            }, 3000);
+
+        });
+    });
+
+</script>
+
+
+
+{{-- =============================================================
+     PAGE-SPECIFIC JAVASCRIPT
+     
+     Example from Subject Create page:
+     
+     @section('scripts')
+         <script src="{{ asset('js/admin-subjects.js') }}"></script>
+     @endsection
+============================================================= --}}
+
+@yield('scripts')
+
+
 </body>
 
 </html>

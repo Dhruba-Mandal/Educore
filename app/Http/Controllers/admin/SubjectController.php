@@ -21,23 +21,64 @@ class SubjectController extends Controller
             return redirect()->route('admin.login');
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Get Filters
+        |--------------------------------------------------------------------------
+        */
+
         $search = trim($request->input('search', ''));
 
         $departmentId = $request->input('department_id', '');
 
         $status = $request->input('status', '');
 
-        $query = Subject::with('departments');
 
         /*
         |--------------------------------------------------------------------------
-        | SEARCH
+        | Normalize "All" Values
+        |--------------------------------------------------------------------------
+        |
+        | If the dropdown sends "all", treat it as no filter.
+        |
+        */
+
+        if (
+            $departmentId === 'all' ||
+            $departmentId === null
+        ) {
+            $departmentId = '';
+        }
+
+        if (
+            $status === 'all' ||
+            $status === null
+        ) {
+            $status = '';
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Subject Query
+        |--------------------------------------------------------------------------
+        */
+
+        $query = Subject::with('departments');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Search Filter
         |--------------------------------------------------------------------------
         */
 
         if ($search !== '') {
 
-            $searchLower = mb_strtolower($search, 'UTF-8');
+            $searchLower = mb_strtolower(
+                $search,
+                'UTF-8'
+            );
 
             $query->where(function ($q) use ($searchLower) {
 
@@ -52,11 +93,13 @@ class SubjectController extends Controller
                 );
 
             });
+
         }
+
 
         /*
         |--------------------------------------------------------------------------
-        | DEPARTMENT FILTER
+        | Department Filter
         |--------------------------------------------------------------------------
         */
 
@@ -70,13 +113,16 @@ class SubjectController extends Controller
                         'departments.id',
                         $departmentId
                     );
+
                 }
             );
+
         }
+
 
         /*
         |--------------------------------------------------------------------------
-        | STATUS FILTER
+        | Status Filter
         |--------------------------------------------------------------------------
         */
 
@@ -86,17 +132,39 @@ class SubjectController extends Controller
                 'status',
                 $status
             );
+
         }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Get Subjects
+        |--------------------------------------------------------------------------
+        */
 
         $subjects = $query
             ->orderBy('subject_name', 'asc')
             ->paginate(10)
             ->withQueryString();
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | Departments
+        |--------------------------------------------------------------------------
+        */
+
         $departments = Department::orderBy(
             'department_name',
             'asc'
         )->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Return View
+        |--------------------------------------------------------------------------
+        */
 
         return view(
             'admin.subjects.index',
@@ -118,22 +186,15 @@ class SubjectController extends Controller
     */
 
     public function create()
-    {
-        if (!session()->has('admin_id')) {
-            return redirect()->route('admin.login');
-        }
-
-        $departments = Department::orderBy(
-            'department_name',
-            'asc'
-        )->get();
-
-        return view(
-            'admin.subjects.create',
-            compact('departments')
-        );
+{
+    if (!session()->has('admin_id')) {
+        return redirect()->route('admin.login');
     }
 
+    $departments = Department::orderBy('department_name', 'asc')->get();
+
+    return view('admin.subjects.create', compact('departments'));
+}
 
     /*
     |--------------------------------------------------------------------------
@@ -148,57 +209,45 @@ class SubjectController extends Controller
         }
 
         $validated = $request->validate([
-
             'department_ids' => [
                 'required',
                 'array',
-                'min:1',
+                'min:1'
             ],
 
             'department_ids.*' => [
-                'required',
                 'integer',
-                'exists:departments,id',
+                'exists:departments,id'
             ],
 
             'subject_code' => [
                 'required',
                 'string',
-                'max:50',
-                'unique:subjects,subject_code',
+                'max:100',
+                'unique:subjects,subject_code'
             ],
 
             'subject_name' => [
                 'required',
                 'string',
-                'max:255',
+                'max:255'
             ],
 
             'status' => [
                 'required',
-                'in:1,0',
+                'in:1,0'
             ],
         ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | CREATE SUBJECT
-        |--------------------------------------------------------------------------
-        */
-
         $subject = Subject::create([
-
             'subject_code' => $validated['subject_code'],
-
             'subject_name' => $validated['subject_name'],
-
             'status' => $validated['status'],
-
         ]);
 
         /*
         |--------------------------------------------------------------------------
-        | ATTACH DEPARTMENTS
+        | Attach Multiple Departments
         |--------------------------------------------------------------------------
         */
 
@@ -208,10 +257,7 @@ class SubjectController extends Controller
 
         return redirect()
             ->route('admin.subjects')
-            ->with(
-                'success',
-                'Subject added successfully.'
-            );
+            ->with('success', 'Subject added successfully.');
     }
 
 
@@ -242,7 +288,6 @@ class SubjectController extends Controller
     | EDIT
     |--------------------------------------------------------------------------
     */
-
     public function edit($id)
     {
         if (!session()->has('admin_id')) {
@@ -259,10 +304,7 @@ class SubjectController extends Controller
 
         return view(
             'admin.subjects.edit',
-            compact(
-                'subject',
-                'departments'
-            )
+            compact('subject', 'departments')
         );
     }
 
@@ -273,10 +315,8 @@ class SubjectController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function update(
-        Request $request,
-        $id
-    ) {
+    public function update(Request $request, $id)
+    {
         if (!session()->has('admin_id')) {
             return redirect()->route('admin.login');
         }
@@ -284,60 +324,47 @@ class SubjectController extends Controller
         $subject = Subject::findOrFail($id);
 
         $validated = $request->validate([
-
             'department_ids' => [
                 'required',
                 'array',
-                'min:1',
+                'min:1'
             ],
 
             'department_ids.*' => [
-                'required',
                 'integer',
-                'exists:departments,id',
+                'exists:departments,id'
             ],
 
             'subject_code' => [
                 'required',
                 'string',
-                'max:50',
-
+                'max:100',
                 'unique:subjects,subject_code,' .
-                $subject->subject_id .
-                ',subject_id',
+                    $subject->subject_id .
+                    ',subject_id'
             ],
 
             'subject_name' => [
                 'required',
                 'string',
-                'max:255',
+                'max:255'
             ],
 
             'status' => [
                 'required',
-                'in:1,0',
+                'in:1,0'
             ],
         ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | UPDATE SUBJECT
-        |--------------------------------------------------------------------------
-        */
-
         $subject->update([
-
             'subject_code' => $validated['subject_code'],
-
             'subject_name' => $validated['subject_name'],
-
             'status' => $validated['status'],
-
         ]);
 
         /*
         |--------------------------------------------------------------------------
-        | UPDATE DEPARTMENTS
+        | Replace Department Relationships
         |--------------------------------------------------------------------------
         */
 
@@ -347,10 +374,7 @@ class SubjectController extends Controller
 
         return redirect()
             ->route('admin.subjects')
-            ->with(
-                'success',
-                'Subject updated successfully.'
-            );
+            ->with('success', 'Subject updated successfully.');
     }
 
 

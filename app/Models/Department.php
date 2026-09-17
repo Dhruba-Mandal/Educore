@@ -63,6 +63,8 @@ class Department extends Model
             Subject::class,
             'department_subject',
             'department_id',
+            'subject_id',
+            'id',
             'subject_id'
         );
     }

@@ -23,11 +23,9 @@ class Subject extends Model
         'status',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Departments
-    |--------------------------------------------------------------------------
-    */
+    protected $casts = [
+        'status' => 'boolean',
+    ];
 
     public function departments()
     {
@@ -35,7 +33,9 @@ class Subject extends Model
             Department::class,
             'department_subject',
             'subject_id',
-            'department_id'
+            'department_id',
+            'subject_id',
+            'id'
         );
     }
 }

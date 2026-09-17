@@ -1,57 +1,152 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    const form =
-        document.getElementById('subjectFilterForm');
+    const box = document.getElementById('departmentMultiselect');
 
-    const searchInput =
-        document.querySelector('input[name="search"]');
+    if (!box) {
+        return;
+    }
 
-    const departmentFilter =
-        document.querySelector('select[name="department_id"]');
+    const trigger = document.getElementById('departmentSelectTrigger');
+    const selectedItems = document.getElementById('departmentSelectedItems');
+    const search = document.getElementById('departmentSearch');
+    const options = box.querySelectorAll('.department-option');
 
-    const statusFilter =
-        document.querySelector('select[name="status"]');
-
-
-    if (!form) {
+    if (!trigger || !selectedItems) {
         return;
     }
 
 
     /*
     |--------------------------------------------------------------------------
-    | SEARCH TEXT WATCHER
+    | UPDATE SELECTED DEPARTMENTS
     |--------------------------------------------------------------------------
     */
 
-    let searchTimer = null;
+    function updateSelectedDepartments() {
 
-    if (searchInput) {
+        selectedItems.innerHTML = '';
 
-        searchInput.addEventListener('input', function () {
-
-            clearTimeout(searchTimer);
-
-            searchTimer = setTimeout(function () {
-
-                form.submit();
-
-            }, 400);
-
-        });
+        const checkedDepartments = box.querySelectorAll(
+            'input[name="department_ids[]"]:checked'
+        );
 
 
-        searchInput.addEventListener('keydown', function (event) {
+        /*
+        |--------------------------------------------------------------------------
+        | Nothing selected
+        |--------------------------------------------------------------------------
+        */
 
-            if (event.key === 'Enter') {
+        if (checkedDepartments.length === 0) {
+
+            const placeholder = document.createElement('span');
+
+            placeholder.className = 'department-placeholder';
+            placeholder.textContent = 'Select Departments';
+
+            selectedItems.appendChild(placeholder);
+
+            return;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Create selected department tags
+        |--------------------------------------------------------------------------
+        */
+
+        const selectedIds = new Set();
+
+        checkedDepartments.forEach(function (checkbox) {
+
+            const departmentId = checkbox.value;
+
+            // Prevent duplicate department IDs
+            if (selectedIds.has(departmentId)) {
+                return;
+            }
+
+            selectedIds.add(departmentId);
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Get department name directly from data-name
+            |--------------------------------------------------------------------------
+            */
+
+            const departmentName =
+                checkbox.dataset.name ||
+                'Department';
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Create tag
+            |--------------------------------------------------------------------------
+            */
+
+            const tag = document.createElement('span');
+
+            tag.className = 'department-selected-chip';
+            tag.dataset.id = departmentId;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Department name
+            |--------------------------------------------------------------------------
+            */
+
+            const name = document.createElement('span');
+
+            name.className = 'department-chip-name';
+            name.textContent = departmentName;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Remove button
+            |--------------------------------------------------------------------------
+            */
+
+            const removeButton = document.createElement('button');
+
+            removeButton.type = 'button';
+            removeButton.className = 'department-chip-remove';
+
+            removeButton.setAttribute(
+                'aria-label',
+                'Remove ' + departmentName
+            );
+
+            removeButton.innerHTML =
+                '<i class="fa-solid fa-xmark"></i>';
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Remove selected department
+            |--------------------------------------------------------------------------
+            */
+
+            removeButton.addEventListener('click', function (event) {
 
                 event.preventDefault();
+                event.stopPropagation();
 
-                clearTimeout(searchTimer);
+                checkbox.checked = false;
 
-                form.submit();
+                updateSelectedDepartments();
 
-            }
+            });
+
+
+            tag.appendChild(name);
+            tag.appendChild(removeButton);
+
+            selectedItems.appendChild(tag);
 
         });
 
@@ -60,49 +155,148 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /*
     |--------------------------------------------------------------------------
-    | DEPARTMENT FILTER
+    | OPEN / CLOSE DROPDOWN
     |--------------------------------------------------------------------------
-    |
-    | Changing the department does NOT submit.
-    | User must click Apply.
-    |
     */
 
-    if (departmentFilter) {
+    trigger.addEventListener('click', function (event) {
 
-        departmentFilter.addEventListener(
-            'change',
-            function () {
+        event.preventDefault();
+        event.stopPropagation();
 
-                // Do nothing.
+        box.classList.toggle('open');
 
-            }
+        if (
+            box.classList.contains('open') &&
+            search
+        ) {
+            setTimeout(function () {
+                search.focus();
+            }, 50);
+        }
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DEPARTMENT CHECKBOXES
+    |--------------------------------------------------------------------------
+    */
+
+    options.forEach(function (option) {
+
+        const checkbox = option.querySelector(
+            'input[name="department_ids[]"]'
         );
+
+        if (!checkbox) {
+            return;
+        }
+
+        checkbox.addEventListener('change', function () {
+
+            updateSelectedDepartments();
+
+        });
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | SEARCH DEPARTMENTS
+    |--------------------------------------------------------------------------
+    */
+
+    if (search) {
+
+        search.addEventListener('input', function () {
+
+            const searchValue = this.value
+                .toLowerCase()
+                .trim();
+
+
+            options.forEach(function (option) {
+
+                const checkbox = option.querySelector(
+                    'input[name="department_ids[]"]'
+                );
+
+                if (!checkbox) {
+                    return;
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Use database value passed through Blade
+                |--------------------------------------------------------------------------
+                */
+
+                const departmentName = (
+                    checkbox.dataset.name || ''
+                ).toLowerCase();
+
+
+                if (departmentName.includes(searchValue)) {
+
+                    option.style.display = 'flex';
+
+                } else {
+
+                    option.style.display = 'none';
+
+                }
+
+            });
+
+        });
 
     }
 
 
     /*
     |--------------------------------------------------------------------------
-    | STATUS FILTER
+    | CLOSE DROPDOWN WHEN CLICKING OUTSIDE
     |--------------------------------------------------------------------------
-    |
-    | Changing the status does NOT submit.
-    | User must click Apply.
-    |
     */
 
-    if (statusFilter) {
+    document.addEventListener('click', function (event) {
 
-        statusFilter.addEventListener(
-            'change',
-            function () {
+        if (!box.contains(event.target)) {
 
-                // Do nothing.
+            box.classList.remove('open');
 
-            }
-        );
+        }
 
-    }
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ESCAPE KEY
+    |--------------------------------------------------------------------------
+    */
+
+    document.addEventListener('keydown', function (event) {
+
+        if (event.key === 'Escape') {
+
+            box.classList.remove('open');
+
+        }
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | INITIALIZE
+    |--------------------------------------------------------------------------
+    */
+
+    updateSelectedDepartments();
 
 });

@@ -12,11 +12,6 @@ return new class extends Migration
 
             $table->id('subject_id');
 
-            $table->foreignId('department_id')
-                ->constrained('departments')
-                ->cascadeOnUpdate()
-                ->restrictOnDelete();
-
             $table->string('subject_name');
 
             $table->string('subject_code', 50)
@@ -27,9 +22,8 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->index('department_id');
-            $table->index('status');
             $table->index('subject_name');
+            $table->index('status');
         });
     }
 

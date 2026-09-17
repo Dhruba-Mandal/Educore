@@ -3,189 +3,182 @@
 @section('title', 'View Subject')
 
 @section('styles')
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/admin-subjects.css') }}"
-    >
+<link rel="stylesheet" href="{{ asset('css/admin-subjects.css') }}">
 @endsection
 
 @section('content')
 
-<div class="subject-form-page">
+<div class="subject-view-page">
 
-    {{-- =====================================================
-         PAGE HEADER
-    ====================================================== --}}
-
-    <div class="form-page-header">
-
+    {{-- Page Header --}}
+    <div class="subject-view-header">
         <div>
-            <h1>
-                Subject Details
-            </h1>
-
-            <p>
-                View subject information
-            </p>
+            <h1>Subject Details</h1>
+            <p>View complete subject information and department allocation.</p>
         </div>
 
-        <a
-            href="{{ route('admin.subjects') }}"
-            class="btn-back"
-        >
+        <a href="{{ route('admin.subjects') }}" class="btn-back">
             <i class="fa-solid fa-arrow-left"></i>
             Back to Subjects
         </a>
-
     </div>
 
 
-    {{-- =====================================================
-         SUBJECT DETAILS
-    ====================================================== --}}
+    {{-- Main Subject Card --}}
+    <div class="subject-view-card">
 
-    <div class="subject-details-card">
+        {{-- Subject Summary --}}
+        <div class="subject-summary">
 
-        {{-- SUBJECT NAME --}}
+            <div class="subject-view-icon">
+                <i class="fa-solid fa-book"></i>
+            </div>
 
-        <div class="detail-row">
+            <div class="subject-summary-info">
+                <span class="subject-label">SUBJECT</span>
 
-            <span>
-                Subject Name
-            </span>
+                <h2>{{ $subject->subject_name }}</h2>
 
-            <strong>
-                {{ $subject->subject_name }}
-            </strong>
-
-        </div>
-
-
-        {{-- SUBJECT CODE --}}
-
-        <div class="detail-row">
-
-            <span>
-                Subject Code
-            </span>
-
-            <strong>
-                {{ $subject->subject_code }}
-            </strong>
-
-        </div>
-
-
-        {{-- DEPARTMENT --}}
-
-        <div class="detail-row">
-
-            <span>
-                Department
-            </span>
-
-            <strong>
-                <div class="subject-department-list">
-
-                    @forelse($subject->departments as $department)
-
-                        <span class="department-badge">
-                            {{ $department->department_name }}
-                        </span>
-
-                    @empty
-
-                        <strong>
-                            Not Assigned
-                        </strong>
-
-                    @endforelse
-
+                <div class="subject-code-view">
+                    <i class="fa-solid fa-hashtag"></i>
+                    {{ $subject->subject_code }}
                 </div>
-            </strong>
+            </div>
+
+            <div class="subject-status">
+                @if($subject->status == 1)
+                    <span class="status-badge active">
+                        <i class="fa-solid fa-circle"></i>
+                        Active
+                    </span>
+                @else
+                    <span class="status-badge inactive">
+                        <i class="fa-solid fa-circle"></i>
+                        Inactive
+                    </span>
+                @endif
+            </div>
 
         </div>
 
 
-        {{-- STATUS --}}
+        {{-- Subject Information --}}
+        <div class="subject-info-section">
 
-        <div class="detail-row">
+            <div class="section-heading">
+                <i class="fa-solid fa-circle-info"></i>
+                <div>
+                    <h3>Subject Information</h3>
+                    <p>Basic information about this subject.</p>
+                </div>
+            </div>
 
-            <span>
-                Status
-            </span>
 
-            @if($subject->status == 1)
+            <div class="subject-info-grid">
 
-                <span class="status-badge active">
-                    Active
-                </span>
+                {{-- Subject Name --}}
+                <div class="info-item">
+                    <span class="info-label">Subject Name</span>
+                    <strong>{{ $subject->subject_name }}</strong>
+                </div>
 
-            @else
 
-                <span class="status-badge inactive">
-                    Inactive
-                </span>
+                {{-- Subject Code --}}
+                <div class="info-item">
+                    <span class="info-label">Subject Code</span>
+                    <strong>{{ $subject->subject_code }}</strong>
+                </div>
 
-            @endif
+
+
+                {{-- Departments --}}
+                <div class="info-item department-info">
+                    <span class="info-label">Departments</span>
+
+                    <div class="department-view-list">
+
+                        @forelse($subject->departments as $department)
+
+                            <span class="department-view-tag">
+                                <i class="fa-solid fa-building-columns"></i>
+                                {{ $department->department_name }}
+                            </span>
+
+                        @empty
+
+                            <span class="not-assigned">
+                                No department assigned
+                            </span>
+
+                        @endforelse
+
+                    </div>
+                </div>
+
+            </div>
 
         </div>
 
 
-        {{-- CREATED DATE --}}
+        {{-- Record Information --}}
+        <div class="subject-record-section">
 
-        <div class="detail-row">
+            <div class="section-heading">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <div>
+                    <h3>Record Information</h3>
+                    <p>System record timestamps.</p>
+                </div>
+            </div>
 
-            <span>
-                Created
-            </span>
 
-            <strong>
-                {{ $subject->created_at?->format('d M Y, h:i A') ?? 'N/A' }}
-            </strong>
+            <div class="record-grid">
+
+                <div class="record-item">
+                    <div class="record-icon">
+                        <i class="fa-regular fa-calendar-plus"></i>
+                    </div>
+
+                    <div>
+                        <span>Created On</span>
+                        <strong>
+                            {{ $subject->created_at?->format('d M Y, h:i A') ?? 'N/A' }}
+                        </strong>
+                    </div>
+                </div>
+
+
+                <div class="record-item">
+                    <div class="record-icon">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </div>
+
+                    <div>
+                        <span>Last Updated</span>
+                        <strong>
+                            {{ $subject->updated_at?->format('d M Y, h:i A') ?? 'N/A' }}
+                        </strong>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
 
 
-        {{-- UPDATED DATE --}}
+        {{-- Actions --}}
+        <div class="subject-view-actions">
 
-        <div class="detail-row">
-
-            <span>
-                Last Updated
-            </span>
-
-            <strong>
-                {{ $subject->updated_at?->format('d M Y, h:i A') ?? 'N/A' }}
-            </strong>
-
-        </div>
-
-
-        {{-- =================================================
-             ACTIONS
-        ================================================== --}}
-
-        <div class="detail-actions">
-
-            {{-- EDIT --}}
-
-            <a
-                href="{{ route('admin.subjects.edit', $subject) }}"
-                class="action-btn edit"
-            >
+            <a href="{{ route('admin.subjects.edit', ['id' => $subject->subject_id]) }}"
+               class="view-action edit">
                 <i class="fa-solid fa-pen"></i>
                 Edit Subject
             </a>
 
-
-            {{-- BACK --}}
-
-            <a
-                href="{{ route('admin.subjects') }}"
-                class="btn-cancel"
-            >
-                Back
+            <a href="{{ route('admin.subjects') }}"
+               class="view-action back">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Subjects
             </a>
 
         </div>
@@ -196,9 +189,6 @@
 
 @endsection
 
-
 @section('scripts')
-
 <script src="{{ asset('js/admin-subjects.js') }}"></script>
-
 @endsection

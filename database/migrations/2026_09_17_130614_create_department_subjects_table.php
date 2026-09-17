@@ -10,8 +10,6 @@ return new class extends Migration
     {
         Schema::create('department_subject', function (Blueprint $table) {
 
-            $table->id();
-
             $table->foreignId('subject_id')
                 ->constrained('subjects', 'subject_id')
                 ->cascadeOnUpdate()
@@ -22,7 +20,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->unique([
+            $table->primary([
                 'subject_id',
                 'department_id'
             ]);

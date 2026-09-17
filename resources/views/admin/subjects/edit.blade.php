@@ -3,220 +3,342 @@
 @section('title', 'Edit Subject')
 
 @section('styles')
-<link
-    rel="stylesheet"
-    href="{{ asset('css/admin-subjects.css') }}"
->
+    <link rel="stylesheet" href="{{ asset('css/admin-subjects.css') }}">
 @endsection
 
 @section('content')
 
 <div class="subject-form-page">
 
-    {{-- PAGE HEADER --}}
+    {{-- =========================================================
+         PAGE HEADER
+    ========================================================== --}}
+
     <div class="form-page-header">
 
         <div>
             <h1>Edit Subject</h1>
 
             <p>
-                Update subject information
+                Update subject information and department assignments.
             </p>
         </div>
 
-        <a
-            href="{{ route('admin.subjects') }}"
-            class="btn-back"
-        >
+        <a href="{{ route('admin.subjects') }}"
+           class="btn-back">
+
             <i class="fa-solid fa-arrow-left"></i>
+
             Back to Subjects
+
         </a>
 
     </div>
 
 
-    {{-- FORM CARD --}}
+    {{-- =========================================================
+         FORM CARD
+    ========================================================== --}}
+
     <div class="subject-form-card">
 
-        <form
-            action="{{ route('admin.subjects.update', $subject->subject_id) }}"
-            method="POST"
-        >
+        <form action="{{ route('admin.subjects.update', $subject->subject_id) }}"
+              method="POST">
 
             @csrf
+
             @method('PUT')
 
 
-            {{-- DEPARTMENT --}}
+            {{-- =================================================
+                 DEPARTMENTS
+            ================================================== --}}
+
             <div class="form-group">
 
                 <label>
-                    Department Name
-                    <span>*</span>
+                    Departments <span>*</span>
                 </label>
 
-                <div class="form-group">
 
-    <label>
-        Department Name
-        <span>*</span>
-    </label>
+                <div class="department-multiselect"
+                     id="departmentMultiselect">
 
-    <div class="department-checkbox-list">
 
-        @foreach($departments as $department)
+                    {{-- =========================================
+                         SELECT TRIGGER
+                    ========================================== --}}
 
-            <label class="department-checkbox">
+                    <button type="button"
+                            class="department-select-trigger"
+                            id="departmentSelectTrigger">
 
-                <input
-                    type="checkbox"
-                    name="department_ids[]"
-                    value="{{ $department->id }}"
+                        <div class="department-selected-items"
+                             id="departmentSelectedItems">
 
-                    {{
-                        in_array(
-                            $department->id,
-                            old(
-                                'department_ids',
-                                $subject->departments
-                                    ->pluck('id')
-                                    ->toArray()
-                            )
-                        )
-                        ? 'checked'
-                        : ''
-                    }}
-                >
+                            <span class="department-placeholder">
+                                Select Departments
+                            </span>
 
-                <span>
-                    {{ $department->department_name }}
-                </span>
+                        </div>
 
-            </label>
 
-        @endforeach
+                        <i class="fa-solid fa-chevron-down department-arrow"></i>
 
-    </div>
+                    </button>
 
-    @error('department_ids')
-        <small class="error">
-            {{ $message }}
-        </small>
-    @enderror
 
-</div>
+                    {{-- =========================================
+                         DROPDOWN
+                    ========================================== --}}
 
-                @error('department_id')
+                    <div class="department-dropdown"
+                         id="departmentDropdown">
+
+
+                        {{-- Search --}}
+                        <div class="department-search">
+
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            <input type="text"
+                                   id="departmentSearch"
+                                   placeholder="Search departments..."
+                                   autocomplete="off">
+
+                        </div>
+
+
+                        {{-- Department Options --}}
+                        <div class="department-options"
+                             id="departmentOptions">
+
+
+                            @forelse($departments as $department)
+
+                                @php
+                                    /*
+                                    |--------------------------------------------------------------------------
+                                    | Check whether this department is already assigned
+                                    |--------------------------------------------------------------------------
+                                    */
+
+                                    $isSelected = $subject->departments
+                                        ->contains('id', $department->id);
+
+                                    /*
+                                    |--------------------------------------------------------------------------
+                                    | If validation failed, use old input instead
+                                    |--------------------------------------------------------------------------
+                                    */
+
+                                    if (old('department_ids') !== null) {
+                                        $isSelected = in_array(
+                                            (string) $department->id,
+                                            array_map(
+                                                'strval',
+                                                old('department_ids', [])
+                                            ),
+                                            true
+                                        );
+                                    }
+                                @endphp
+
+
+                                <label class="department-option">
+
+                                    <input type="checkbox"
+                                           name="department_ids[]"
+                                           value="{{ $department->id }}"
+                                           data-name="{{ $department->department_name }}"
+                                           {{ $isSelected ? 'checked' : '' }}>
+
+
+                                    <span class="department-checkmark">
+
+                                        <i class="fa-solid fa-check"></i>
+
+                                    </span>
+
+
+                                    <span class="department-option-name">
+
+                                        {{ $department->department_name }}
+
+                                    </span>
+
+                                </label>
+
+                            @empty
+
+                                <div class="department-empty">
+
+                                    <i class="fa-solid fa-building"></i>
+
+                                    <span>
+                                        No departments available
+                                    </span>
+
+                                </div>
+
+                            @endforelse
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {{-- Department Validation --}}
+                @error('department_ids')
+
                     <small class="error">
                         {{ $message }}
                     </small>
+
+                @enderror
+
+
+                @error('department_ids.*')
+
+                    <small class="error">
+                        {{ $message }}
+                    </small>
+
                 @enderror
 
             </div>
 
 
-            {{-- SUBJECT CODE --}}
+            {{-- =================================================
+                 SUBJECT CODE
+            ================================================== --}}
+
             <div class="form-group">
 
                 <label>
-                    Subject Code
-                    <span>*</span>
+                    Subject Code <span>*</span>
                 </label>
 
-                <input
-                    type="text"
-                    name="subject_code"
-                    value="{{ old('subject_code', $subject->subject_code) }}"
-                    required
-                >
+
+                <input type="text"
+                       name="subject_code"
+                       value="{{ old('subject_code', $subject->subject_code) }}"
+                       placeholder="e.g. CS001"
+                       maxlength="100"
+                       required>
+
 
                 @error('subject_code')
+
                     <small class="error">
                         {{ $message }}
                     </small>
+
                 @enderror
 
             </div>
 
 
-            {{-- SUBJECT NAME --}}
+            {{-- =================================================
+                 SUBJECT NAME
+            ================================================== --}}
+
             <div class="form-group">
 
                 <label>
-                    Subject Name
-                    <span>*</span>
+                    Subject Name <span>*</span>
                 </label>
 
-                <input
-                    type="text"
-                    name="subject_name"
-                    value="{{ old('subject_name', $subject->subject_name) }}"
-                    required
-                >
+
+                <input type="text"
+                       name="subject_name"
+                       value="{{ old('subject_name', $subject->subject_name) }}"
+                       placeholder="e.g. Data Structure"
+                       maxlength="255"
+                       required>
+
 
                 @error('subject_name')
+
                     <small class="error">
                         {{ $message }}
                     </small>
+
                 @enderror
 
             </div>
 
 
-            {{-- STATUS --}}
+            {{-- =================================================
+                 STATUS
+            ================================================== --}}
+
             <div class="form-group">
 
                 <label>
-                    Status
-                    <span>*</span>
+                    Status <span>*</span>
                 </label>
 
-                <select
-                    name="status"
-                    required
-                >
 
-                    <option
-                        value="1"
-                        {{ old('status', $subject->status) == 1 ? 'selected' : '' }}
-                    >
-                        Active
+                <select name="status" required>
+
+                    <option value="">
+                        Select Status
                     </option>
 
-                    <option
-                        value="0"
-                        {{ old('status', $subject->status) == 0 ? 'selected' : '' }}
-                    >
+
+                    <option value="1"
+                        {{ old('status', (string) $subject->status) === '1' ? 'selected' : '' }}>
+
+                        Active
+
+                    </option>
+
+
+                    <option value="0"
+                        {{ old('status', (string) $subject->status) === '0' ? 'selected' : '' }}>
+
                         Inactive
+
                     </option>
 
                 </select>
 
+
                 @error('status')
+
                     <small class="error">
                         {{ $message }}
                     </small>
+
                 @enderror
 
             </div>
 
 
-            {{-- BUTTONS --}}
+            {{-- =================================================
+                 FORM ACTIONS
+            ================================================== --}}
+
             <div class="form-actions">
 
-                <button
-                    type="submit"
-                    class="btn-save"
-                >
+                <button type="submit"
+                        class="btn-save">
+
                     <i class="fa-solid fa-check"></i>
+
                     Update Subject
+
                 </button>
 
-                <a
-                    href="{{ route('admin.subjects') }}"
-                    class="btn-cancel"
-                >
+
+                <a href="{{ route('admin.subjects') }}"
+                   class="btn-cancel">
+
                     Cancel
+
                 </a>
 
             </div>
@@ -230,8 +352,12 @@
 @endsection
 
 
+{{-- =============================================================
+     PAGE-SPECIFIC JAVASCRIPT
+============================================================= --}}
+
 @section('scripts')
 
-<script src="{{ asset('js/admin-subjects.js') }}"></script>
+    <script src="{{ asset('js/admin-subjects.js') }}"></script>
 
 @endsection
