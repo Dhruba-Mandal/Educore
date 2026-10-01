@@ -1,0 +1,1078 @@
+/* =========================================================
+EDUCORE - ADMIN COURSE FORM
+========================================================= */
+
+* {
+  box-sizing: border-box;
+  }
+
+.course-form-page {
+width: 100%;
+min-height: calc(100vh - 70px);
+padding: 35px 40px 60px;
+background: #f5f7fb;
+}
+
+/* =========================================================
+PAGE HEADER
+========================================================= */
+
+.course-form-header {
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 25px;
+margin-bottom: 30px;
+}
+
+.course-form-header > div:first-child {
+flex: 1;
+}
+
+.course-form-label {
+display: inline-block;
+margin-bottom: 8px;
+font-size: 12px;
+font-weight: 800;
+letter-spacing: 1.5px;
+color: #6c5ce7;
+}
+
+.course-form-header h1 {
+margin: 0;
+font-size: 32px;
+line-height: 1.2;
+font-weight: 800;
+color: #172033;
+}
+
+.course-form-header p {
+margin: 10px 0 0;
+color: #7a8497;
+font-size: 15px;
+}
+
+/* =========================================================
+BACK BUTTON
+========================================================= */
+
+.course-back-button {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 9px;
+
+
+padding: 12px 18px;
+
+border: 1px solid #dfe3eb;
+border-radius: 10px;
+
+background: #ffffff;
+color: #374151;
+
+text-decoration: none;
+font-size: 14px;
+font-weight: 700;
+
+transition: all 0.2s ease;
+
+
+}
+
+.course-back-button:hover {
+background: #f7f5ff;
+color: #6c5ce7;
+border-color: #cfc8ff;
+transform: translateY(-1px);
+}
+
+/* =========================================================
+ERROR BOX
+========================================================= */
+
+.course-error-box {
+margin-bottom: 25px;
+padding: 18px 20px;
+
+
+border: 1px solid #fecaca;
+border-left: 5px solid #ef4444;
+border-radius: 12px;
+
+background: #fff5f5;
+color: #7f1d1d;
+
+
+}
+
+.course-error-title {
+display: flex;
+align-items: center;
+gap: 9px;
+
+
+margin-bottom: 10px;
+
+font-size: 15px;
+font-weight: 800;
+
+
+}
+
+.course-error-box ul {
+margin: 0;
+padding-left: 25px;
+}
+
+.course-error-box li {
+margin: 5px 0;
+font-size: 14px;
+}
+
+/* =========================================================
+FORM CARD
+========================================================= */
+
+.course-form-card {
+width: 100%;
+margin-bottom: 28px;
+
+
+background: #ffffff;
+
+border: 1px solid #e6e9f0;
+border-radius: 18px;
+
+box-shadow: 0 8px 30px rgba(31, 41, 55, 0.06);
+
+overflow: hidden;
+
+
+}
+
+/* =========================================================
+CARD HEADER
+========================================================= */
+
+.course-form-card-header {
+display: flex;
+align-items: center;
+gap: 15px;
+
+
+padding: 24px 28px;
+
+border-bottom: 1px solid #edf0f5;
+
+background: #ffffff;
+
+
+}
+
+.course-form-icon {
+width: 48px;
+height: 48px;
+
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+flex-shrink: 0;
+
+border-radius: 12px;
+
+background: #eeeaff;
+color: #6c5ce7;
+
+font-size: 19px;
+
+
+}
+
+.course-form-icon.semester-icon {
+background: #eaf7f3;
+color: #159570;
+}
+
+.course-form-card-header h2 {
+margin: 0;
+
+
+font-size: 20px;
+font-weight: 800;
+
+color: #172033;
+
+
+}
+
+.course-form-card-header p {
+margin: 5px 0 0;
+
+
+color: #8a93a5;
+font-size: 13px;
+
+
+}
+
+/* =========================================================
+COURSE FORM GRID
+========================================================= */
+
+.course-form-grid {
+display: grid;
+
+
+grid-template-columns: repeat(2, minmax(0, 1fr));
+
+gap: 22px;
+
+padding: 28px;
+
+
+}
+
+.course-full-width {
+grid-column: 1 / -1;
+}
+
+/* =========================================================
+FORM GROUP
+========================================================= */
+
+.course-form-group {
+min-width: 0;
+}
+
+.course-form-group label {
+display: block;
+
+
+margin-bottom: 8px;
+
+color: #344054;
+
+font-size: 14px;
+font-weight: 700;
+
+}
+
+.course-form-group label span {
+color: #ef4444;
+}
+
+/* =========================================================
+FORM INPUTS
+========================================================= */
+
+.course-form-control {
+width: 100%;
+height: 48px;
+
+
+padding: 0 14px;
+
+border: 1px solid #dfe3eb;
+border-radius: 10px;
+
+background: #ffffff;
+
+color: #1f2937;
+
+font-size: 14px;
+
+outline: none;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+
+
+}
+
+.course-form-control:hover {
+border-color: #c7ccd7;
+}
+
+.course-form-control:focus {
+border-color: #6c5ce7;
+
+
+box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.10);
+
+background: #ffffff;
+
+
+}
+
+.course-form-control::placeholder {
+color: #a0a7b5;
+}
+
+select.course-form-control {
+cursor: pointer;
+}
+
+/* =========================================================
+FIELD ERROR
+========================================================= */
+
+.course-field-error {
+display: block;
+
+
+margin-top: 7px;
+
+color: #dc2626;
+
+font-size: 12px;
+font-weight: 600;
+
+
+}
+
+/* =========================================================
+STATUS SWITCH
+========================================================= */
+
+.course-switch {
+display: flex !important;
+align-items: center;
+
+
+gap: 12px;
+
+margin-top: 7px;
+
+cursor: pointer;
+
+
+}
+
+.course-switch input {
+position: absolute;
+opacity: 0;
+pointer-events: none;
+}
+
+.course-slider {
+position: relative;
+
+
+width: 50px;
+height: 27px;
+
+flex-shrink: 0;
+
+border-radius: 30px;
+
+background: #d1d5db;
+
+transition: background 0.25s ease;
+
+
+}
+
+.course-slider::before {
+content: "";
+
+
+position: absolute;
+
+width: 21px;
+height: 21px;
+
+left: 3px;
+top: 3px;
+
+border-radius: 50%;
+
+background: #ffffff;
+
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+
+transition: transform 0.25s ease;
+
+
+}
+
+.course-switch input:checked + .course-slider {
+background: #6c5ce7;
+}
+
+.course-switch input:checked + .course-slider::before {
+transform: translateX(23px);
+}
+
+.course-switch-text {
+color: #374151 !important;
+
+
+font-size: 14px !important;
+font-weight: 700 !important;
+
+margin: 0 !important;
+
+
+}
+
+/* =========================================================
+SUBJECT MESSAGE
+========================================================= */
+
+.subject-message {
+display: flex;
+align-items: center;
+gap: 10px;
+
+
+margin: 24px 28px 0;
+padding: 14px 16px;
+
+border: 1px solid #dce4ff;
+border-radius: 10px;
+
+background: #f4f6ff;
+
+color: #4f46a5;
+
+font-size: 13px;
+font-weight: 600;
+
+
+}
+
+.subject-message i {
+font-size: 15px;
+}
+
+/* =========================================================
+SUBJECT LOADING
+========================================================= */
+
+.subject-loading {
+align-items: center;
+justify-content: center;
+gap: 10px;
+
+
+margin: 20px 28px 0;
+padding: 18px;
+
+border-radius: 10px;
+
+background: #f8f9fc;
+
+color: #6c5ce7;
+
+font-size: 14px;
+font-weight: 700;
+
+
+}
+
+/* =========================================================
+SEMESTER GRID
+========================================================= */
+
+.semester-grid {
+display: grid;
+
+
+grid-template-columns: repeat(2, minmax(0, 1fr));
+
+gap: 22px;
+
+padding: 28px;
+
+
+}
+
+/* =========================================================
+SEMESTER BOX
+========================================================= */
+
+.semester-box {
+min-width: 0;
+
+
+border: 1px solid #e4e7ee;
+border-radius: 14px;
+
+background: #fbfcfe;
+
+overflow: hidden;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+
+}
+
+.semester-box:hover {
+border-color: #d4cffc;
+
+
+box-shadow: 0 5px 20px rgba(31, 41, 55, 0.05);
+
+
+}
+
+/* =========================================================
+SEMESTER HEADER
+========================================================= */
+
+.semester-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 15px;
+
+
+padding: 16px 18px;
+
+border-bottom: 1px solid #e7eaf0;
+
+background: #ffffff;
+
+
+}
+
+.semester-number {
+display: block;
+
+
+color: #252d3d;
+
+font-size: 15px;
+font-weight: 800;
+
+
+}
+
+.semester-header small {
+display: block;
+
+
+margin-top: 3px;
+
+color: #8b94a5;
+
+font-size: 11px;
+
+
+}
+
+.subject-count {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+padding: 6px 10px;
+
+border-radius: 20px;
+
+background: #eeeaff;
+color: #6252d7;
+
+font-size: 11px;
+font-weight: 800;
+
+white-space: nowrap;
+
+
+}
+
+/* =========================================================
+SUBJECT LIST
+========================================================= */
+
+.subject-list {
+max-height: 330px;
+
+
+overflow-y: auto;
+
+padding: 12px;
+
+
+}
+
+.subject-list::-webkit-scrollbar {
+width: 6px;
+}
+
+.subject-list::-webkit-scrollbar-track {
+background: #f1f3f6;
+}
+
+.subject-list::-webkit-scrollbar-thumb {
+background: #c8cdd8;
+border-radius: 10px;
+}
+
+/* =========================================================
+SUBJECT CHECKBOX
+========================================================= */
+
+.subject-checkbox {
+position: relative;
+
+
+display: flex !important;
+align-items: center;
+
+gap: 11px;
+
+margin: 0 !important;
+padding: 11px 12px;
+
+border: 1px solid transparent;
+border-radius: 9px;
+
+cursor: pointer;
+
+transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+
+
+}
+
+.subject-checkbox:hover {
+background: #f5f3ff;
+
+
+border-color: #e5e0ff;
+
+
+}
+
+.subject-checkbox input {
+position: absolute;
+
+
+opacity: 0;
+
+pointer-events: none;
+
+
+}
+
+/* =========================================================
+CUSTOM CHECKMARK
+========================================================= */
+
+.subject-checkmark {
+width: 20px;
+height: 20px;
+
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+flex-shrink: 0;
+
+border: 2px solid #cbd0da;
+border-radius: 5px;
+
+background: #ffffff;
+
+color: #ffffff;
+
+font-size: 10px;
+
+transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+
+
+}
+
+.subject-checkbox input:checked + .subject-checkmark {
+border-color: #6c5ce7;
+
+
+background: #6c5ce7;
+
+
+}
+
+.subject-checkbox input:checked + .subject-checkmark i {
+display: block;
+}
+
+.subject-checkmark i {
+display: none;
+}
+
+/* =========================================================
+SUBJECT DETAILS
+========================================================= */
+
+.subject-details {
+display: flex !important;
+flex-direction: column;
+
+
+min-width: 0;
+
+margin: 0 !important;
+
+
+}
+
+.subject-details strong {
+overflow: hidden;
+
+
+color: #303849;
+
+font-size: 13px;
+font-weight: 800;
+
+text-overflow: ellipsis;
+white-space: nowrap;
+
+
+}
+
+.subject-details > span {
+overflow: hidden;
+
+
+margin-top: 2px;
+
+color: #858e9f;
+
+font-size: 11px;
+
+text-overflow: ellipsis;
+white-space: nowrap;
+
+
+}
+
+/* =========================================================
+NO SUBJECTS
+========================================================= */
+
+.no-subjects {
+min-height: 150px;
+
+
+display: flex;
+flex-direction: column;
+
+align-items: center;
+justify-content: center;
+
+gap: 9px;
+
+padding: 20px;
+
+color: #9aa2b1;
+
+text-align: center;
+
+
+}
+
+.no-subjects i {
+font-size: 28px;
+
+
+opacity: 0.7;
+
+
+}
+
+.no-subjects span {
+font-size: 12px;
+font-weight: 600;
+}
+
+/* =========================================================
+FORM ACTIONS
+========================================================= */
+
+.course-form-actions {
+display: flex;
+align-items: center;
+justify-content: flex-end;
+
+
+gap: 12px;
+
+width: 100%;
+
+margin-top: 5px;
+
+
+}
+
+/* =========================================================
+CANCEL BUTTON
+========================================================= */
+
+.course-cancel-button {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+
+min-width: 110px;
+height: 46px;
+
+padding: 0 18px;
+
+border: 1px solid #dfe3eb;
+border-radius: 10px;
+
+background: #ffffff;
+color: #4b5563;
+
+text-decoration: none;
+
+font-size: 14px;
+font-weight: 700;
+
+transition: all 0.2s ease;
+
+
+}
+
+.course-cancel-button:hover {
+background: #f8fafc;
+border-color: #cbd1dc;
+color: #1f2937;
+}
+
+/* =========================================================
+SAVE BUTTON
+========================================================= */
+
+.course-save-button {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+
+gap: 9px;
+
+min-width: 150px;
+height: 46px;
+
+padding: 0 20px;
+
+border: none;
+border-radius: 10px;
+
+background: #6c5ce7;
+color: #ffffff;
+
+cursor: pointer;
+
+font-size: 14px;
+font-weight: 800;
+
+box-shadow: 0 5px 14px rgba(108, 92, 231, 0.22);
+
+transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+
+}
+
+.course-save-button:hover {
+background: #5b4bd5;
+
+transform: translateY(-1px);
+
+box-shadow: 0 7px 18px rgba(108, 92, 231, 0.28);
+
+
+}
+
+.course-save-button:active {
+transform: translateY(0);
+}
+
+/* =========================================================
+RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+
+.course-form-page {
+    padding: 30px 25px 50px;
+}
+
+.semester-grid {
+    grid-template-columns: 1fr;
+}
+
+
+}
+
+/* =========================================================
+RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+
+.course-form-page {
+    padding: 22px 15px 40px;
+}
+
+.course-form-header {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.course-form-header h1 {
+    font-size: 26px;
+}
+
+.course-back-button {
+    width: 100%;
+}
+
+.course-form-grid {
+    grid-template-columns: 1fr;
+
+    padding: 20px;
+}
+
+.course-full-width {
+    grid-column: auto;
+}
+
+.course-form-card-header {
+    padding: 20px;
+}
+
+.semester-grid {
+    padding: 20px;
+}
+
+.course-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+}
+
+.course-cancel-button,
+.course-save-button {
+    width: 100%;
+}
+
+
+}
+
+/* =========================================================
+SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+.course-form-page {
+    padding: 18px 10px 30px;
+}
+
+.course-form-header h1 {
+    font-size: 23px;
+}
+
+.course-form-card-header {
+    align-items: flex-start;
+}
+
+.course-form-icon {
+    width: 42px;
+    height: 42px;
+
+    font-size: 16px;
+}
+
+.course-form-card-header h2 {
+    font-size: 17px;
+}
+
+.course-form-grid {
+    padding: 16px;
+}
+
+.semester-grid {
+    padding: 16px;
+    gap: 15px;
+}
+
+.semester-header {
+    padding: 13px;
+}
+
+.subject-list {
+    max-height: 280px;
+}
+
+
+}
+/* Disabled subject in another semester */
+.subject-checkbox input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.subject-checkbox input[type="checkbox"]:disabled + span {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+.subject-checkbox input[type="checkbox"]:disabled {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 22px;
+    height: 22px;
+
+    background: #ffffff;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+
+    cursor: not-allowed;
+}
+/*
+|--------------------------------------------------------------------------
+| Disabled Subject
+|--------------------------------------------------------------------------
+*/
+
+.subject-checkbox input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.subject-checkbox input[type="checkbox"]:disabled + .subject-checkmark {
+    background: #ffffff;
+    border-color: #d1d5db;
+    opacity: 0.8;
+}
+
+.subject-checkbox input[type="checkbox"]:disabled + .subject-checkmark i {
+    display: none;
+}
+
+.subject-checkbox input[type="checkbox"]:disabled ~ .subject-details {
+    opacity: 0.55;
+    cursor: not-allowed;
+}

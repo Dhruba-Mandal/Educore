@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CourseController;
 
 
 
@@ -55,7 +56,7 @@ Route::get('/admin/departments', [AdminAuthController::class, 'departments'])
     ->name('admin.departments');
 
 Route::get('/admin/courses', [AdminAuthController::class, 'courses'])
-    ->name('admin.courses');
+    ->name('admin.courses.index');
 
 Route::get('/admin/subjects', [AdminAuthController::class, 'subjects'])
     ->name('admin.subjects');
@@ -182,3 +183,46 @@ Route::delete(
     '/admin/subjects/{id}',
     [SubjectController::class, 'destroy']
 )->name('admin.subjects.destroy');
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Course Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    // Course list
+    Route::get('/courses', [CourseController::class, 'index'])
+        ->name('courses.index');
+
+    // Add course form
+    Route::get('/courses/create', [CourseController::class, 'create'])
+        ->name('courses.create');
+
+    // Store course
+    Route::post('/courses', [CourseController::class, 'store'])
+        ->name('courses.store');
+
+    // Show course
+    Route::get('/courses/{id}', [CourseController::class, 'show'])
+    ->name('courses.show');
+
+    // Edit course
+    Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])
+        ->name('courses.edit');
+
+    // Update course
+    Route::put('/courses/{id}', [CourseController::class, 'update'])
+        ->name('courses.update');
+
+    // Delete course
+    Route::delete('/courses/{id}', [CourseController::class, 'destroy'])
+        ->name('courses.destroy');
+
+    // Fetch subjects according to department
+    Route::get('/courses/subjects/{department_id}', [CourseController::class, 'getSubjects'])
+        ->name('courses.subjects');
+});

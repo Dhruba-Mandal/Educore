@@ -110,7 +110,7 @@
 
 
             {{-- Courses --}}
-            <a href="{{ route('admin.courses') }}"
+            <a href="{{ route('admin.courses.index') }}"
                class="menu-item {{ request()->routeIs('admin.courses*') ? 'active' : '' }}">
 
                 <i class="fa-solid fa-book-open"></i>
