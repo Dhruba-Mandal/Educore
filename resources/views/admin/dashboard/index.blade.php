@@ -109,12 +109,22 @@
 
             </div>
 
-            <h2>{{ $departmentCount }}</h2>
-            <p>Departments</p>
+            <h2>{{ $totalDepartments }}</h2>
 
-            <!-- <small>
-                No change
-            </small> -->
+            <h4>Total Departments</h4>
+
+            <small>
+                <span style="color: #198754; font-weight: 600; font-size: 15px;">
+                    Active: {{ $activeDepartments }}
+                </span>
+
+                <span style="margin: 0 6px; color: #999; font-size: 15px;">|</span>
+
+                <span style="color: #dc3545; font-weight: 600; font-size: 15px;">
+                    Inactive: {{ $inactiveDepartments }}
+                </span>
+            </small>
+
 
         </div>
 
@@ -124,25 +134,23 @@
         <div class="stat-card">
 
             <div class="stat-icon green">
-
                 <i class="fa-solid fa-book-open"></i>
-
             </div>
 
-            <div class="stat-top">
+            <h2>{{ $totalCourses }}</h2>
 
-                <span class="growth">
-                    ↗ +
-                </span>
-
-            </div>
-
-            <h2>48</h2>
-
-            <p>Active Courses</p>
+            <h4>Total Courses</h4>
 
             <small>
-                +5 this semester
+                <span style="color: #198754; font-weight: 600; font-size: 15px;">
+                    Active: {{ $activeCourses }}
+                </span>
+
+                <span style="margin: 0 6px; color: #999; font-size: 15px;">|</span>
+
+                <span style="color: #dc3545; font-weight: 600; font-size: 15px;">
+                    Inactive: {{ $inactiveCourses }}
+                </span>
             </small>
 
         </div>
