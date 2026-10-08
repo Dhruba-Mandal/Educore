@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\admin\FacultyController;
 
 
 
@@ -22,7 +23,7 @@ Route::get('/', function () {
 // ADMINISTRATOR AUTHENTICATION
 // ================================
 
-Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])
+Route::get('/admin/login', [AdminAuthController::class, 'adminShowLogin'])
     ->name('admin.login');
 
 Route::post('/admin/login', [AdminAuthController::class, 'login'])
@@ -31,6 +32,19 @@ Route::post('/admin/login', [AdminAuthController::class, 'login'])
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])
     ->name('admin.logout');
 
+
+// // ================================
+// // FACULTY AUTHENTICATION
+// // ================================
+
+Route::get('/faculty/login', [AdminAuthController::class, 'facultyShowLogin'])
+    ->name('faculty.login');
+
+Route::post('/faculty/login', [AdminAuthController::class, 'login'])
+    ->name('faculty.login.submit');
+
+Route::post('/faculty/logout', [AdminAuthController::class, 'logout'])
+    ->name('faculty.logout');
 
 
 // ================================
@@ -88,11 +102,6 @@ Route::get('/admin/settings', [AdminAuthController::class, 'settings'])
 // ================================
 //Faculty, Student DASHBOARD
 // ================================
-// Faculty Login - temporary
-Route::get('/faculty/login', function () {
-    return view('faculty.login');
-})->name('faculty.login');
-
 
 // Student Login - temporary
 Route::get('/student/login', function () {
@@ -226,3 +235,46 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/courses/subjects/{department_id}', [CourseController::class, 'getSubjects'])
         ->name('courses.subjects');
 });
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin Faculty
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/admin/faculty',
+    [FacultyController::class, 'index']
+)->name('admin.faculty');
+
+Route::get(
+    '/admin/faculty/create',
+    [FacultyController::class, 'create']
+)->name('admin.faculty.create');
+
+Route::post(
+    '/admin/faculty',
+    [FacultyController::class, 'store']
+)->name('admin.faculty.store');
+
+Route::get(
+    '/admin/faculty/{id}',
+    [FacultyController::class, 'show']
+)->name('admin.faculty.show');
+
+Route::get(
+    '/admin/faculty/{id}/edit',
+    [FacultyController::class, 'edit']
+)->name('admin.faculty.edit');
+
+Route::put(
+    '/admin/faculty/{id}',
+    [FacultyController::class, 'update']
+)->name('admin.faculty.update');
+
+Route::delete(
+    '/admin/faculty/{id}',
+    [FacultyController::class, 'destroy']
+)->name('admin.faculty.destroy');

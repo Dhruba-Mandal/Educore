@@ -11,9 +11,17 @@ class DashboardController extends Controller
     public function index()
     {
         // Check admin login
-        if (!session()->has('admin_id')) {
-            return redirect()->route('admin.login');
+        //dd(session('role_id') );
+        if (session('role_id') == '') {
+            return redirect()->route('role.selection');
         }
+        // if (!session()->has('admin_id')) {
+        //     return redirect()->route('admin.login');
+        // }
+        // if (!session()->has('faculty_id')) {
+        //     return redirect()->route('faculty.login');
+        // }
+        //dd(session()->has('faculty_id'));
 
         // Dynamic department count
         $totalDepartments = Department::count();
