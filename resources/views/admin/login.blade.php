@@ -216,7 +216,11 @@
 
 
                     <!-- EMAIL -->
-
+                         <input
+                                type="hidden"
+                                name="role_id"
+                                value="1"
+                            >
                     <div class="form-group">
 
                         <label for="email">
